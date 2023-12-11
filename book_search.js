@@ -67,6 +67,41 @@ const twentyLeaguesOut = {
     ]
 }
 
+/** MY sample output objects */
+const twentyLeaguesOut2 = {
+    "SearchTerm": "Canadian\'s",
+    "Results": [
+        {
+            "ISBN": "9780000528531",
+            "Page": 31,
+            "Line": 9
+        }
+    ]
+}
+
+const twentyLeaguesOut3 = {
+    "SearchTerm": "The",
+    "Results": [
+        {
+            "ISBN": "9780000528531",
+            "Page": 31,
+            "Line": 8
+        }
+    ]
+}
+
+const twentyLeaguesOut4 = {
+    "SearchTerm": "i",
+    "Results": [      
+    ]
+}
+
+const twentyLeaguesOut5 = {
+    "SearchTerm": "aNd",
+    "Results": [      
+    ]
+}
+
 /*
  _   _ _   _ ___ _____   _____ _____ ____ _____ ____  
 | | | | \ | |_ _|_   _| |_   _| ____/ ___|_   _/ ___| 
@@ -102,3 +137,45 @@ if (test2result.Results.length == 1) {
     console.log("Expected:", twentyLeaguesOut.Results.length);
     console.log("Received:", test2result.Results.length);
 }
+
+/** MY unit tests
+ * Positive
+ */
+const test3result = findSearchTermInBooks("Canadian\'s", twentyLeaguesIn);
+if (JSON.stringify(twentyLeaguesOut2) === JSON.stringify(test3result)) {
+    console.log("PASS: Test 3");
+} else {
+    console.log("FAIL: Test 3");
+    console.log("Expected:", twentyLeaguesOut2);
+    console.log("Received", test3result);
+}
+
+const test4result = findSearchTermInBooks("The", twentyLeaguesIn);
+if (JSON.stringify(twentyLeaguesOut3) === JSON.stringify(test4result)) {
+    console.log("PASS: Test 4");
+} else {
+    console.log("FAIL: Test 4");
+    console.log("Expected:", twentyLeaguesOut3);
+    console.log("Received", test4result);
+}
+
+// Negative
+const test5result = findSearchTermInBooks("i", twentyLeaguesIn);
+if (JSON.stringify(twentyLeaguesOut4) === JSON.stringify(test5result)) {
+    console.log("PASS: Test 5");
+} else {
+    console.log("FAIL: Test 5");
+    console.log("Expected:", twentyLeaguesOut4);
+    console.log("Received", test5result);
+}
+
+// TODO: case sensitive
+const test6result = findSearchTermInBooks("aNd", twentyLeaguesIn);
+if (JSON.stringify(twentyLeaguesOut5) === JSON.stringify(test6result)) {
+    console.log("PASS: Test 6");
+} else {
+    console.log("FAIL: Test 6");
+    console.log("Expected:", twentyLeaguesOut5);
+    console.log("Received", test6result);
+}
+// TODO: test for "dark-"
