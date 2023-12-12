@@ -32,17 +32,12 @@
 
     // Use searchTerm to search through each Text property within scannedTextObj[Content][Text]
     scannedTextObj.forEach((book, book_index) => {
-        // console.log("The book is ", book, " and its index in our list is ", book_index);
         // If searchTerm exists in scannedTextObj[Content][Text], then Update result[Results]
-        //console.log("The book's contents is :", book.Content)
         
         book.Content.forEach((phrase, index) => {
             const words = phrase.Text.split(' ');
-            // console.log(words)
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
             if (words.includes(searchTerm)){
-                //console.log(phrase.Text);
-                // console.log("We found the word! ", searchTerm, "at index ", index);
                 result.Results.push({
                     "ISBN": scannedTextObj[book_index].ISBN,
                     "Page": scannedTextObj[book_index].Content[index].Page,
@@ -83,7 +78,12 @@ const twentyLeaguesIn = [
 
 const noBook = []
 
-// TODO
+const noBookOut = {
+    "SearchTerm": "where",
+    "Results": [    
+    ]
+}
+
 const multBooks = [
     {
         "Title": "Tuesdays with Morrie",
@@ -124,6 +124,22 @@ const multBooks = [
     }
 ]
 
+const multBooksOut = {
+    "SearchTerm": "that",
+    "Results": [
+        { 
+            "ISBN": "9780767905923", 
+            "Page": 10, 
+            "Line": 26 
+        },
+        { 
+            "ISBN": "9780835211292", 
+            "Page": 15, 
+            "Line": 12 
+        }
+    ]
+}
+
 const multBooksNoContent = [
     {
         "Title": "Star Wars, Episode III: Revenge of the Sith",
@@ -137,6 +153,11 @@ const multBooksNoContent = [
     }
 ]
 
+const multBooksNoContentOut = {
+    "SearchTerm": "technique",
+    "Results": []
+}
+
 /** Example output object */
 const twentyLeaguesOut = {
     "SearchTerm": "the",
@@ -148,10 +169,6 @@ const twentyLeaguesOut = {
         }
     ]
 }
-
-// console.log(findSearchTermInBooks("technique", multBooksNoContent));
-
-/** MY sample output objects */
 
 const twentyLeaguesOut2 = {
     "SearchTerm": "Canadian\'s",
@@ -182,36 +199,9 @@ const twentyLeaguesOut4 = {
 }
 
 const twentyLeaguesOut5 = {
-    "SearchTerm": "hOWeVEr",
+    "SearchTerm": "However",
     "Results": [      
     ]
-}
-
-const noBookOut = {
-    "SearchTerm": "where",
-    "Results": [    
-    ]
-}
-
-const multBooksOut = {
-    "SearchTerm": "that",
-    "Results": [
-        { 
-            "ISBN": "9780767905923", 
-            "Page": 10, 
-            "Line": 26 
-        },
-        { 
-            "ISBN": "9780835211292", 
-            "Page": 15, 
-            "Line": 12 
-        }
-    ]
-}
-
-const multBooksNoContentOut = {
-    "SearchTerm": "technique",
-    "Results": []
 }
 
 /*
@@ -282,7 +272,7 @@ if (JSON.stringify(twentyLeaguesOut4) === JSON.stringify(test5result)) {
 }
 
 // Case Sensitive
-const test6result = findSearchTermInBooks("hOWeVEr", twentyLeaguesIn);
+const test6result = findSearchTermInBooks("However", twentyLeaguesIn);
 if (JSON.stringify(twentyLeaguesOut5) === JSON.stringify(test6result)) {
     console.log("PASS: Test 6");
 } else {
@@ -311,7 +301,7 @@ if (JSON.stringify(multBooksOut) === JSON.stringify(test8result)) {
     console.log("Received:", test8result);
 }
 
-// TODO: test for book(s), but no content
+// test for book(s), but no content
 const test9result = findSearchTermInBooks("technique", multBooksNoContent);
 if (JSON.stringify(multBooksNoContentOut) === JSON.stringify(test9result)) {
     console.log("PASS: Test 9");
