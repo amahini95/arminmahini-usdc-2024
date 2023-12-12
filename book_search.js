@@ -242,7 +242,7 @@ if (test2result.Results.length == 1) {
     console.log("Received:", test2result.Results.length);
 }
 
-// MY unit tests: Positive
+// Positive
 const test3result = findSearchTermInBooks("Canadian\'s", twentyLeaguesIn);
 if (JSON.stringify(twentyLeaguesOut2) === JSON.stringify(test3result)) {
     console.log("PASS: Test 3");
@@ -281,7 +281,7 @@ if (JSON.stringify(twentyLeaguesOut5) === JSON.stringify(test6result)) {
     console.log("Received:", test6result);
 }
 
-// test for no books
+// No books
 const test7result = findSearchTermInBooks("where", noBook);
 if (JSON.stringify(noBookOut) === JSON.stringify(test7result)) {
     console.log("PASS: Test 7");
@@ -291,7 +291,7 @@ if (JSON.stringify(noBookOut) === JSON.stringify(test7result)) {
     console.log("Received:", test7result)
 }
 
-// test for books, with content
+// Books, with content
 const test8result = findSearchTermInBooks("that", multBooks);
 if (JSON.stringify(multBooksOut) === JSON.stringify(test8result)) {
     console.log("PASS: Test 8");
@@ -301,7 +301,7 @@ if (JSON.stringify(multBooksOut) === JSON.stringify(test8result)) {
     console.log("Received:", test8result);
 }
 
-// test for book(s), but no content
+// Books, but no content
 const test9result = findSearchTermInBooks("technique", multBooksNoContent);
 if (JSON.stringify(multBooksNoContentOut) === JSON.stringify(test9result)) {
     console.log("PASS: Test 9");
