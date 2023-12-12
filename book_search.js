@@ -41,7 +41,7 @@
             // console.log(words)
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
             if (words.includes(searchTerm)){
-                console.log(phrase.Text);
+                //console.log(phrase.Text);
                 // console.log("We found the word! ", searchTerm, "at index ", index);
                 result.Results.push({
                     "ISBN": scannedTextObj[book_index].ISBN,
@@ -149,10 +149,10 @@ const twentyLeaguesOut = {
     ]
 }
 
-console.log(findSearchTermInBooks("technique", multBooksNoContent));
+// console.log(findSearchTermInBooks("technique", multBooksNoContent));
 
 /** MY sample output objects */
-/*
+
 const twentyLeaguesOut2 = {
     "SearchTerm": "Canadian\'s",
     "Results": [
@@ -195,7 +195,7 @@ const noBookOut = {
 
 const multBooksOut = {
     "SearchTerm": "that",
-    "Results: [
+    "Results": [
         { 
             "ISBN": "9780767905923", 
             "Page": 10, 
@@ -207,6 +207,11 @@ const multBooksOut = {
             "Line": 12 
         }
     ]
+}
+
+const multBooksNoContentOut = {
+    "SearchTerm": "technique",
+    "Results": []
 }
 
 /*
@@ -226,7 +231,7 @@ const multBooksOut = {
  * Please add your unit tests below.
  * */
 
-/** We can check that, given a known input, we get a known output. 
+/** We can check that, given a known input, we get a known output. */
 
 const test1result = findSearchTermInBooks("the", twentyLeaguesIn);
 if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test1result)) {
@@ -237,7 +242,7 @@ if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test1result)) {
     console.log("Received:", test1result);
 }
 
-/** We could choose to check that we get the right number of results. 
+/** We could choose to check that we get the right number of results. */
 const test2result = findSearchTermInBooks("the", twentyLeaguesIn); 
 if (test2result.Results.length == 1) {
     console.log("PASS: Test 2");
@@ -289,7 +294,7 @@ if (JSON.stringify(twentyLeaguesOut5) === JSON.stringify(test6result)) {
 // test for no books
 const test7result = findSearchTermInBooks("where", noBook);
 if (JSON.stringify(noBookOut) === JSON.stringify(test7result)) {
-    console.leg("PASS: Test 7");
+    console.log("PASS: Test 7");
 } else {
     console.log("FAIL: Test 7");
     console.log("Expected:", noBookOut);
@@ -308,12 +313,10 @@ if (JSON.stringify(multBooksOut) === JSON.stringify(test8result)) {
 
 // TODO: test for book(s), but no content
 const test9result = findSearchTermInBooks("technique", multBooksNoContent);
-if (JSON.stringify(multBooksNoContent) === JSON.stringify(test9result)) {
+if (JSON.stringify(multBooksNoContentOut) === JSON.stringify(test9result)) {
     console.log("PASS: Test 9");
 } else {
     console.log("FAIL: Test 9");
-    console.log("Expected:", multBooksNoContent);
+    console.log("Expected:", multBooksNoContentOut);
     console.log("Received:", test9result);
 }
-
-*/
