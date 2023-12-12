@@ -31,18 +31,18 @@
     result['SearchTerm'] = searchTerm;
 
     // Use searchTerm to search through each Text property within scannedTextObj[Content][Text]
-    // ContentArr = scannedTextObj[0].Content;
     scannedTextObj.forEach((book, book_index) => {
-        console.log("The book is ", book, " and its index in our list is ", book_index);
+        // console.log("The book is ", book, " and its index in our list is ", book_index);
         // If searchTerm exists in scannedTextObj[Content][Text], then Update result[Results]
-        //book_content = book.Content;
-        //console.log("The book's contents is :", book_content)
+        //console.log("The book's contents is :", book.Content)
         
         book.Content.forEach((phrase, index) => {
-             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
-            if (phrase.Text.includes(searchTerm)){
+            const words = phrase.Text.split(' ');
+            // console.log(words)
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+            if (words.includes(searchTerm)){
                 console.log(phrase.Text);
-                console.log("We found the word! ", searchTerm, "at index ", index);
+                // console.log("We found the word! ", searchTerm, "at index ", index);
                 result.Results.push({
                     "ISBN": scannedTextObj[book_index].ISBN,
                     "Page": scannedTextObj[book_index].Content[index].Page,
@@ -81,6 +81,62 @@ const twentyLeaguesIn = [
     }
 ]
 
+const noBook = []
+
+// TODO
+const multBooks = [
+    {
+        "Title": "Tuesdays with Morrie",
+        "ISBN": "9780767905923",
+        "Content": [
+            {
+                "Page": 5,
+                "Line": 4,
+                "Text": "He had always been a dancer, my old professor."
+            },
+            {
+                "Page": 10,
+                "Line": 26,
+                "Text": "Morrie would walk that final bridge between life and death, and narrate the trip."
+            },
+            {
+                "Page": 20,
+                "Line": 23,
+                "Text": "\"Don\'t feel bad. I\'ve only seen \'Oprah\' once.\""
+            } 
+        ] 
+    },
+    {
+        "Title": "Atomic Habits",
+        "ISBN" : "9780835211292",
+        "Content": [
+            {
+                "Page": 7,
+                "Line": 6,
+                "Text": "But with better habits, anything is possible."
+            },
+            {
+                "Page": 15,
+                "Line": 12,
+                "Text": "Too often, we convince ourselves that massive success requires massive action."
+            }
+        ]
+    }
+]
+
+const multBooksNoContent = [
+    {
+        "Title": "Star Wars, Episode III: Revenge of the Sith",
+        "ISBN": "9780345428844",
+        "Content": [] 
+    },
+    {
+        "Title": "Naruto: The Official Character Data Book",
+        "ISBN" : "9781421541259",
+        "Content": []
+    }
+]
+
 /** Example output object */
 const twentyLeaguesOut = {
     "SearchTerm": "the",
@@ -93,9 +149,10 @@ const twentyLeaguesOut = {
     ]
 }
 
-console.log(findSearchTermInBooks("the", twentyLeaguesIn));
+console.log(findSearchTermInBooks("technique", multBooksNoContent));
 
 /** MY sample output objects */
+/*
 const twentyLeaguesOut2 = {
     "SearchTerm": "Canadian\'s",
     "Results": [
@@ -125,8 +182,30 @@ const twentyLeaguesOut4 = {
 }
 
 const twentyLeaguesOut5 = {
-    "SearchTerm": "aNd",
+    "SearchTerm": "hOWeVEr",
     "Results": [      
+    ]
+}
+
+const noBookOut = {
+    "SearchTerm": "where",
+    "Results": [    
+    ]
+}
+
+const multBooksOut = {
+    "SearchTerm": "that",
+    "Results: [
+        { 
+            "ISBN": "9780767905923", 
+            "Page": 10, 
+            "Line": 26 
+        },
+        { 
+            "ISBN": "9780835211292", 
+            "Page": 15, 
+            "Line": 12 
+        }
     ]
 }
 
@@ -147,8 +226,8 @@ const twentyLeaguesOut5 = {
  * Please add your unit tests below.
  * */
 
-/** We can check that, given a known input, we get a known output. */
-/*
+/** We can check that, given a known input, we get a known output. 
+
 const test1result = findSearchTermInBooks("the", twentyLeaguesIn);
 if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test1result)) {
     console.log("PASS: Test 1");
@@ -158,8 +237,7 @@ if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test1result)) {
     console.log("Received:", test1result);
 }
 
-/** We could choose to check that we get the right number of results. */
-/*
+/** We could choose to check that we get the right number of results. 
 const test2result = findSearchTermInBooks("the", twentyLeaguesIn); 
 if (test2result.Results.length == 1) {
     console.log("PASS: Test 2");
@@ -176,7 +254,7 @@ if (JSON.stringify(twentyLeaguesOut2) === JSON.stringify(test3result)) {
 } else {
     console.log("FAIL: Test 3");
     console.log("Expected:", twentyLeaguesOut2);
-    console.log("Received", test3result);
+    console.log("Received:", test3result);
 }
 
 const test4result = findSearchTermInBooks("The", twentyLeaguesIn);
@@ -185,7 +263,7 @@ if (JSON.stringify(twentyLeaguesOut3) === JSON.stringify(test4result)) {
 } else {
     console.log("FAIL: Test 4");
     console.log("Expected:", twentyLeaguesOut3);
-    console.log("Received", test4result);
+    console.log("Received:", test4result);
 }
 
 // Negative
@@ -195,18 +273,47 @@ if (JSON.stringify(twentyLeaguesOut4) === JSON.stringify(test5result)) {
 } else {
     console.log("FAIL: Test 5");
     console.log("Expected:", twentyLeaguesOut4);
-    console.log("Received", test5result);
+    console.log("Received:", test5result);
 }
 
-// TODO: case sensitive
-const test6result = findSearchTermInBooks("aNd", twentyLeaguesIn);
+// Case Sensitive
+const test6result = findSearchTermInBooks("hOWeVEr", twentyLeaguesIn);
 if (JSON.stringify(twentyLeaguesOut5) === JSON.stringify(test6result)) {
     console.log("PASS: Test 6");
 } else {
     console.log("FAIL: Test 6");
     console.log("Expected:", twentyLeaguesOut5);
-    console.log("Received", test6result);
+    console.log("Received:", test6result);
 }
 
-// TODO: test for "dark-"
+// test for no books
+const test7result = findSearchTermInBooks("where", noBook);
+if (JSON.stringify(noBookOut) === JSON.stringify(test7result)) {
+    console.leg("PASS: Test 7");
+} else {
+    console.log("FAIL: Test 7");
+    console.log("Expected:", noBookOut);
+    console.log("Received:", test7result)
+}
+
+// test for books, with content
+const test8result = findSearchTermInBooks("that", multBooks);
+if (JSON.stringify(multBooksOut) === JSON.stringify(test8result)) {
+    console.log("PASS: Test 8");
+} else {
+    console.log("FAIL: Test 8");
+    console.log("Expected:", multBooksOut);
+    console.log("Received:", test8result);
+}
+
+// TODO: test for book(s), but no content
+const test9result = findSearchTermInBooks("technique", multBooksNoContent);
+if (JSON.stringify(multBooksNoContent) === JSON.stringify(test9result)) {
+    console.log("PASS: Test 9");
+} else {
+    console.log("FAIL: Test 9");
+    console.log("Expected:", multBooksNoContent);
+    console.log("Received:", test9result);
+}
+
 */
